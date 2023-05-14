@@ -1,5 +1,5 @@
 import { rendDataCarteDuMonde, rendToutesDonnes } from "./data.js";
-import * as d3 from "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.js";
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 const afficheCouleurMonde = () => {
   const titreCouleur = document.querySelector("#titreCouleurMondiale");
