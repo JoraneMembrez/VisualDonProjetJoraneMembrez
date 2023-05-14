@@ -1,7 +1,7 @@
 import * as d3 from "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.js";
 //import dataBrut from "../data/anamia.csv";
 
-const dataBrut = d3.csv("../data/anamia.csv");
+const dataBrut = csv("../data/anamia.csv");
 //import { nest } from "https://cdn.jsdelivr.net/npm/d3-collection@1.0.7/dist/d3-collection.min.js";
 
 const rendToutesDonnes = () => {
