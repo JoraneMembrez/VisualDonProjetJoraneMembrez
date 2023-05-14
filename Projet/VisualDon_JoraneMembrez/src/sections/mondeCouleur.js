@@ -1,4 +1,4 @@
-import { rendDataCarteDuMonde, rendToutesDonnes } from "./data";
+import { rendDataCarteDuMonde, rendToutesDonnes } from "./data.js";
 import * as d3 from "d3";
 
 const afficheCouleurMonde = () => {

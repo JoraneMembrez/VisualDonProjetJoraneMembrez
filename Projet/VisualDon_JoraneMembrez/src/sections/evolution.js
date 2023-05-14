@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { rendToutesDonnes } from "./data";
+import { rendToutesDonnes } from "./data.js";
 
 const rendDataEvolution = () => {
   const data = rendToutesDonnes();
