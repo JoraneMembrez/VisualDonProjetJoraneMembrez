@@ -1,6 +1,6 @@
-import * as d3 from "d3";
+import * as d3 from "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.js";
 import dataBrut from "/data/anamia.csv";
-import { nest } from "d3-collection";
+import { nest } from "https://cdnjs.cloudflare.com/ajax/libs/d3-collection/1.0.5/d3-collection.js";
 
 const rendToutesDonnes = () => {
   return dataBrut;

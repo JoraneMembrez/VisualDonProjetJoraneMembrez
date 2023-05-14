@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import * as d3 from "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.js";
 import { rendToutesDonnes } from "./data.js";
 
 const rendDataEvolution = () => {
