@@ -71,6 +71,9 @@ var rendDataEvolution = function rendDataEvolution() {
 exports.rendDataEvolution = rendDataEvolution;
 
 var afficheEvolutionAnnes = function afficheEvolutionAnnes() {
+  var h1 = "Evolution de la boulimie et de l'anorexie dans le monde dans le monde de 1990 à 2019";
+  var titre = document.querySelector("#titreEvolutionMondiale");
+  titre.textContent = h1;
   var data = rendDataEvolution(); // Marges et translations
 
   var margin = {
@@ -79,10 +82,10 @@ var afficheEvolutionAnnes = function afficheEvolutionAnnes() {
     bottom: 30,
     left: 40
   },
-      width = window.innerWidth - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom; // Ajouter le svg
+      width = 1000 - margin.left - margin.right,
+      height = 700 - margin.top - margin.bottom; // Ajouter le svg
 
-  var monSvg = d3.select("#graph-evolutionMondiale").append("svg").attr("width", "100%").attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")"); // Echelle
+  var monSvg = d3.select("#graph-evolutionMondiale").append("svg").attr("width", "1000").attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")"); // Echelle
 
   var xScale = d3.scaleBand().range([0, width]).paddingInner(0.1).domain(data.filter(function (d) {
     return d.year <= 2019;
@@ -101,7 +104,7 @@ var afficheEvolutionAnnes = function afficheEvolutionAnnes() {
   }).y(function (d) {
     return yScale(d.anorexie);
   }).curve(d3.curveLinear);
-  monSvg.append("path").datum(data).attr("fill", "none").attr("stroke", "grey").attr("stroke-width", 2).attr("class", "line-anorexie").attr("d", lineAnorexie); // Dessiner la courbe de boulimie
+  monSvg.append("path").datum(data).attr("fill", "none").attr("stroke", "black").attr("stroke-width", 2).attr("class", "line-anorexie").attr("d", lineAnorexie); // Dessiner la courbe de boulimie
 
   var lineBoulimie = d3.line().x(function (d) {
     return xScale(d.year);
@@ -111,23 +114,47 @@ var afficheEvolutionAnnes = function afficheEvolutionAnnes() {
   monSvg.append("path").datum(data).attr("fill", "none").attr("stroke", "white").attr("stroke-width", 2).attr("class", "line-boulimie").attr("d", lineBoulimie); // Dessiner l'axe X
 
   var xAxis = d3.axisBottom(xScale);
-  monSvg.append("g").attr("transform", "translate(0," + height + ")").call(xAxis); // Dessiner l'axe Y
+  monSvg.append("g").attr("transform", "translate(0," + height + ")").attr("class", "x-axis").call(xAxis); // Dessiner l'axe Y
 
   var yAxis = d3.axisLeft(yScale).tickFormat(d3.format(".2s"));
   monSvg.append("g").call(yAxis); // Ajouter la légende
 
   var legend = monSvg.append("g").attr("class", "legend").attr("transform", "translate(".concat(width - 100, ",").concat(height - 80, ")"));
-  legend.append("text").attr("x", 10).attr("y", 20).text("Anorexie").attr("fill", "grey").attr("font-size", "16px");
+  legend.append("text").attr("x", 10).attr("y", 20).text("Anorexie").attr("fill", "black").attr("font-size", "16px");
   legend.append("text").attr("x", 10).attr("y", 40).text("Boulimie").attr("fill", "white").attr("font-size", "16px"); // Créer un élément input de type range
 
-  var slider = d3.select("#barre").append("input").attr("type", "range").attr("min", 1990).attr("max", 2019).attr("step", 1).attr("value", [1990, 2019]).style("position", "absolute").style("width", "50%").style("left", "25%");
+  var slider = d3.select("#barre").append("input").attr("type", "range").attr("min", 1990).attr("max", 2019).attr("step", 1).attr("value", [1990, 2019]).style("position", "absolute").style("width", "35%").style("left", "23%");
   var startYear = d3.select("#barre").append("div").attr("class", "start-year").text("1990").style("position", "absolute").style("left", "20%");
-  var endYear = d3.select("#barre").append("div").attr("class", "end-year").text("2019").style("position", "absolute").style("left", "80%"); // permet de mettre la barre de selection au debut
+  var endYear = d3.select("#barre").append("div").attr("class", "end-year").text("2019").style("position", "absolute").style("left", "60%"); // Ajouter une broche
+
+  /*const brush = d3
+    .brushX()
+    .extent([
+      [margin.left, 0.5],
+      [width - margin.right, focusHeight - margin.bottom + 0.5],
+    ])
+    .on("brush", brushed)
+    .on("end", brushended);
+    const defaultSelection = [
+    x(d3.utcYear.offset(x.domain()[1], -1)),
+    x.range()[1],
+  ];
+    function brushed({ selection }) {
+    if (selection) {
+      svg.property("value", selection.map(x.invert, x).map(d3.utcDay.round));
+      svg.dispatch("input");
+    }
+  }
+    function brushended({ selection }) {
+    if (!selection) {
+      gb.call(brush.move, defaultSelection);
+    }
+  } */
+  // permet de mettre la barre de selection au debut
 
   slider.node().value = slider.attr("min");
   slider.on("input", function () {
     // updateGraph();
-    console.log("ca marche");
     var startYearValue = d3.select(this).property("value").split(",")[0]; //  const endYearValue = d3.select(this).property("value").split(",")[1];
 
     var endYearValue = 2019;
@@ -143,22 +170,22 @@ var afficheEvolutionAnnes = function afficheEvolutionAnnes() {
     });
     console.log(annees); //  monSvg.select("xAxis").call(xAxis);
 
-    var newXScale = d3.scaleLinear().domain(filteredData.filter(function (d) {
+    var newXScale = d3.scaleBand().range([0, width]).domain(filteredData.filter(function (d) {
       return d.year <= 2019;
     }).map(function (d) {
       return d.year;
     }), function (d) {
       return d.year;
-    }).range([0, width]); // redessiner les légendes de l'axe x
-    //  xAxis = d3.axisBottom(newXScale);
+    }); // redessiner les légendes de l'axe x
 
+    xAxis = d3.axisBottom(newXScale);
     monSvg.select(".line-boulimie").datum(filteredData).transition().duration(1000).attr("d", lineBoulimie.x(function (d) {
       return newXScale(d.year);
     }));
     monSvg.select(".line-anorexie").datum(filteredData).transition().duration(1000).attr("d", lineAnorexie.x(function (d) {
       return newXScale(d.year);
     }));
-    monSvg.select("xAxis").transition().duration(1000).call(d3.axisBottom(annees));
+    monSvg.select(".x-axis").call(xAxis);
   });
 };
 

@@ -83,23 +83,12 @@ var rendDataEvolutionMondialeAnorexie = function rendDataEvolutionMondialeAnorex
   });
   return data;
 };
-/*const rendDataEvolutionMondialeBoulimie = () => {
-  const dataBrut = rendToutesDonnes();
-  console.log(dataBrut);
-  const data = dataBrut.map((d) => ({
-    annees: d.year,
-    boulimie: d.prevalence_bulimia,
-  }));
-  return data;
-}; */
-
 
 exports.rendDataEvolutionMondialeAnorexie = rendDataEvolutionMondialeAnorexie;
 
 var rendDataCarteDuMonde = function rendDataCarteDuMonde() {
   var data = rendToutesDonnes();
-  var dataMonde = []; // Count prevalence_anorexia and prevalence_bulimia for each country
-
+  var dataMonde = [];
   var dataGrouped = (0, _d3Collection.nest)().key(function (d) {
     return d.isocode;
   }).rollup(function (v) {
@@ -111,29 +100,7 @@ var rendDataCarteDuMonde = function rendDataCarteDuMonde() {
         return d.prevalence_bulimia;
       })
     };
-  }).entries(data); // Boucle à travers toutes les années et tous les pays
-
-  /*for (let i = 1996; i <= 2019; i++) {
-    let j = 0;
-    data.forEach((el) => {
-      let pays = el.entity;
-      let sumAnorexie = 0;
-      let sumBoulimie = 0;
-        for (let i = 1996; i <= 2019; i++) {
-        let anorexie = el.prevalence_anorexia;
-        let boulimie = el.prevalence_bulimia;
-        sumAnorexie += anorexie;
-        sumBoulimie += boulimie;
-      }
-      dataMonde[j] = {
-        Pays: pays,
-        Anorexie: sumAnorexie,
-        Boulimie: sumBoulimie,
-      };
-      j++;
-    });
-  } */
-
+  }).entries(data);
   return dataGrouped;
 };
 

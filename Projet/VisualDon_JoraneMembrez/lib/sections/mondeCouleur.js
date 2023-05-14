@@ -28,6 +28,10 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var afficheCouleurMonde = function afficheCouleurMonde() {
+  var titreCouleur = document.querySelector("#titreCouleurMondiale");
+  titreCouleur.innerHTML = "Les pays les plus touchés par les troubles alimentaire";
+  var legende = "<ul>\n            <li><span class=\"legend-dot chiffre1\"></span> &lt 1'000</li>\n            <li><span class=\"legend-dot chiffre2\"></span> 1'001 - 50'000</li>\n            <li><span class=\"legend-dot chiffre3\"></span> 50'001 - 100'000</li>\n            <li><span class=\"legend-dot chiffre4\"></span> 100'000 - 500'000</li>\n            <li>\n              <span class=\"legend-dot chiffre5\"></span> 500'001 - 1000'000\n            </li>\n            <li><span class=\"legend-dot chiffre6\"></span> > 1'000'000</li>\n          </ul>";
+  document.querySelector("#legende").innerHTML = legende;
   var dataPays = (0, _data.rendDataCarteDuMonde)();
   var margin = {
     top: 10,
@@ -40,9 +44,9 @@ var afficheCouleurMonde = function afficheCouleurMonde() {
   var map = d3.select("#map-paysCouleur").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).attr("class", "country").append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   var projection = d3.geoOrthographic().scale(210).center([0, 0]).translate([width / 2, height / 2]);
   var path = d3.geoPath().projection(projection);
-  var thresholds = [0, 10000, 50000, 100000, 500000, 1000000, 5000000]; // Définir les couleurs correspondantes pour chaque catégorie
+  var thresholds = [0, 1000, 50000, 100000, 500000, 1000000]; // Définir les couleurs correspondantes pour chaque catégorie
 
-  var colors = ["white", "hsl(217, 89%, 61%)", "#1a1f71", "#0C00FF", "#27ae60", "green"]; // Définir l'échelle de couleurs avec la fonction d3.scaleThreshold()
+  var colors = ["#edf8fb", "#ccece6", "#99d8c9", "#66c2a4", "#2ca25f", "#006d2c"]; // Définir l'échelle de couleurs avec la fonction d3.scaleThreshold()
 
   var colorScale = d3.scaleThreshold().domain(thresholds).range(colors);
   d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function (data) {
@@ -108,15 +112,16 @@ var afficheCouleurMonde = function afficheCouleurMonde() {
 
   map.call(d3.drag().on("drag", dragged));
   map.on("click", function (event) {
+    document.querySelector("body").classList.remove("degrade");
+    document.querySelector("body").classList.remove("terreFond");
+    document.querySelector("body").classList.add("onClicked");
     var pays = {};
-    dataPays.forEach(function (d) {
-      // console.log(event.srcElement.__data__.id);
-      pays = dataPays.find(function (dc) {
-        return dc.key == event.srcElement.__data__.id;
-      });
+    pays = dataPays.find(function (dc) {
+      return dc.key == event.srcElement.__data__.id;
     });
 
     if (pays) {
+      console.log("pays : ", pays);
       event.srcElement.__data__.properties.anorexie = pays.value.anorexie;
       event.srcElement.__data__.properties.boulimie = pays.value.boulimie;
     }
@@ -147,15 +152,17 @@ var recupereDonnesPays = function recupereDonnesPays(data) {
   afficheGraphiquePays(donneesPays);
 };
 
-afficheGraphiquePays = function afficheGraphiquePays() {
+var afficheGraphiquePays = function afficheGraphiquePays(donneesPays) {
+  var data = donneesPays[0];
+  console.log("Les data sont ", data);
   var margin = {
     top: 10,
     right: 40,
     bottom: 30,
     left: 40
   },
-      width = window.innerWidth - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom; // Ajouter le svg
+      width = 1000 - margin.left - margin.right - 100,
+      height = 400 - margin.top - margin.bottom - 100; // Ajouter le svg
 
   var monSvg = d3.select("#nombreCasPays").append("svg").attr("width", "100%").attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")"); // Echelle
 
@@ -164,32 +171,36 @@ afficheGraphiquePays = function afficheGraphiquePays() {
   }).map(function (d) {
     return d.year;
   }));
+  console.log("les données sont : ", data);
   var maxCount = d3.max(data.filter(function (d) {
     return d.year <= 2019;
   }), function (d) {
-    return d.anorexie > d.boulimie ? d.anorexie : d.boulimie;
+    return d.prevalence_anorexia > d.prevalence_bulimia ? d.prevalence_anorexia : d.prevalence_bulimia;
   });
   var yScale = d3.scaleLinear().range([height, 0]).domain([0, Math.ceil(maxCount / 1000) * 1000]); // Dessiner la courbe d'anorexie
 
   var lineAnorexie = d3.line().x(function (d) {
     return xScale(d.year);
   }).y(function (d) {
-    return yScale(d.anorexie);
+    return yScale(d.prevalence_anorexia);
   }).curve(d3.curveLinear);
-  monSvg.append("path").datum(data).attr("fill", "none").attr("stroke", "grey").attr("stroke-width", 2).attr("class", "line-anorexie").attr("d", lineAnorexie); // Dessiner la courbe de boulimie
+  monSvg.append("path").datum(data).attr("fill", "none").attr("stroke", "white").attr("stroke-width", 2).attr("class", "line-anorexie").attr("d", lineAnorexie); // Dessiner la courbe de boulimie
 
   var lineBoulimie = d3.line().x(function (d) {
     return xScale(d.year);
   }).y(function (d) {
-    return yScale(d.boulimie);
+    return yScale(d.prevalence_bulimia);
   }).curve(d3.curveLinear);
-  monSvg.append("path").datum(data).attr("fill", "none").attr("stroke", "white").attr("stroke-width", 2).attr("class", "line-boulimie").attr("d", lineBoulimie); // Dessiner l'axe X
+  monSvg.append("path").datum(data).attr("fill", "none").attr("stroke", "grey").attr("stroke-width", 2).attr("class", "line-boulimie").attr("d", lineBoulimie); // Dessiner l'axe X
 
   var xAxis = d3.axisBottom(xScale);
   monSvg.append("g").attr("transform", "translate(0," + height + ")").call(xAxis); // Dessiner l'axe Y
 
   var yAxis = d3.axisLeft(yScale).tickFormat(d3.format(".2s"));
   monSvg.append("g").call(yAxis);
+  var legend = monSvg.append("g").attr("class", "legend").attr("transform", "translate(".concat(80, ",", 100, ")"));
+  legend.append("text").attr("x", 10).attr("y", 20).text("Anorexie").attr("fill", "white").attr("font-size", "16px");
+  legend.append("text").attr("x", 10).attr("y", 40).text("Boulimie").attr("fill", "grey").attr("font-size", "16px");
 };
 
 var afficheSectionDonnes = function afficheSectionDonnes(donneesAffichees) {
