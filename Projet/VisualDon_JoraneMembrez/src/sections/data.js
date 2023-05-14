@@ -1,18 +1,18 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 //import dataBrut from "../data/anamia.csv";
 
-const dataBrut = await d3.csv("../data/anamia.csv");
+const dataBrut = d3.csv("../data/anamia.csv");
 //import { nest } from "https://cdn.jsdelivr.net/npm/d3-collection@1.0.7/dist/d3-collection.min.js";
 
-const rendToutesDonnes = () => {
-  return dataBrut;
+const rendToutesDonnes = async () => {
+  return await dataBrut;
 };
 
 // rend la liste des pays sans doublons
 const prendPaysUnique = () => {
   let pays = [];
 
-  dataBrut.forEach((el) => {
+  rendToutesDonnes.forEach((el) => {
     pays.push(el.entity);
   });
 
@@ -37,7 +37,7 @@ const prendPaysUnique = () => {
 const prendPays = () => {
   let pays = [];
 
-  dataBrut.forEach((el) => {
+  rendToutesDonnes.forEach((el) => {
     pays.push(el.entity);
   });
 
@@ -47,7 +47,7 @@ const prendPays = () => {
 const prendAnnnes = () => {
   let annees = [];
 
-  dataBrut.forEach((el) => {
+  rendToutesDonnes.forEach((el) => {
     pays.push(el.year);
   });
 
@@ -55,8 +55,7 @@ const prendAnnnes = () => {
 };
 
 const rendDataEvolutionMondialeAnorexie = () => {
-  const dataBrut = rendToutesDonnes();
-  const data = dataBrut.map((d) => ({
+  const data = rendToutesDonnes().map((d) => ({
     annees: d.year,
     anorexie: d.prevalence_anorexia,
   }));
