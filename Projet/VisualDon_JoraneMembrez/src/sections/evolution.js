@@ -1,5 +1,5 @@
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { rendToutesDonnes } from "./data.js";
+import * as d3 from "d3";
+import { rendToutesDonnes } from "./data";
 
 const rendDataEvolution = () => {
   const data = rendToutesDonnes();

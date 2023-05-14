@@ -1,12 +1,13 @@
 //import * as d3 from "d3";
 
-import { rendToutesDonnes } from "./sections/data.js";
-import { afficheEvolutionAnnes } from "./sections/evolution.js";
-import { afficheCouleurMonde } from "./sections/mondeCouleur.js";
+import { rendToutesDonnes } from "./sections/data";
+import { afficheEvolutionAnnes, afficheTest } from "./sections/evolution";
+import { afficheCouleurMonde } from "./sections/mondeCouleur";
 import {
   afficheConclusion,
   ajoutBoutonRecommencer,
-} from "./sections/conclusion.js";
+} from "./sections/conclusion";
+import { set } from "d3-collection";
 
 setTimeout(() => {
   document.getElementById("avertissement").style.display = "block";

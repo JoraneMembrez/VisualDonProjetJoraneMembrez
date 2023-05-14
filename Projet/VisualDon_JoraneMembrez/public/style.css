@@ -1,0 +1,361 @@
+:root {
+    --bleu-clair: hsl(217, 89%, 61%);
+    --couleur-bleu-foncé: #1a1f71;
+    --couleur-bleu-petent :#0C00FF;
+    --couleur-tertiaire: #27ae60;
+}
+
+
+body {
+    overflow-y: scroll;
+    font : 100%/1.5 "Open Sans", sans-serif;
+    background-color: #000000;
+    background-repeat: no-repeat;
+    border-top: 10px;
+    color: white;
+    margin-top: 15rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    
+}
+
+h1 {
+    position: fixed;
+    top : 0;
+    left: 0;
+    font-size: 100px;
+    text-align: center;
+    display: center;
+    padding-bottom: 5rem;
+    padding-left: 15rem;
+    padding-right: 15rem;
+}
+
+.ajoutPadding {
+    padding-top : 8rem;
+}
+
+h2 {
+    font-size: 40px;
+    display: inherit;
+    padding-bottom: 5rem;
+    padding-left: 2rem;
+   
+}
+
+.description {
+    float: right;
+    width: 50%;
+    top:40rem;
+    box-sizing: border-box;
+    padding: 5rem 5rem;
+    text-align: justify;
+    font-size: 18px;
+
+}
+
+.definition {
+    padding-top: 10rem;
+}
+
+.containerConclusion {
+display:flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+margin-bottom: 20rem;
+
+}
+
+
+
+@keyframes blink {
+    0% {
+        background-color: white;
+        color: black;
+    }
+
+    50% {
+        background-color: lightblue;
+        color: black;
+    }
+        
+}
+
+button.blink {
+        background-color: white;
+        color: black;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        animation: blink 0.8s linear infinite; 
+}
+
+
+
+  .country {
+      fill: #ccc;
+      stroke: #fff;
+  }
+
+
+input {
+    width: 300px;
+}
+
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: block;
+              
+ }
+        
+ li {
+    padding: 5px;
+    margin: 5px 0;
+}
+        
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 5px;
+        }
+
+
+               
+        
+.chiffre1 {
+    background-color:#edf8fb;
+    }
+        
+.chiffre2 {
+    background-color:#ccece6;
+    }
+
+.chiffre3 {
+    background-color:#99d8c9;
+    }
+                                                         .chiffre4 {
+background-color:#66c2a4                                                      }
+    .chiffre5 {
+                background-color: #2ca25f; }
+
+
+    .chiffre6 {
+                background-color: #006d2c
+                                }
+#map-paysCouleur {
+    position: absolute;
+        top: 20rem;
+        right: 0;
+}
+
+
+#legende {
+    position: absolute;
+    top: 800px;
+    right: auto;
+    font-size: 12px;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+
+}
+
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: #fff;
+    z-index: 9999;
+}
+
+
+
+#content {
+    margin-top: 80px;
+    /* pour éviter que le contenu soit caché par le header */
+}
+
+
+
+
+#conclusion {
+    margin-right: 15rem;
+    margin-left: 15rem;
+    margin-bottom : 5rem;
+    padding: 10px;
+    font-size: 24px;
+    width: 950px;
+    height: auto;
+    text-align: justify;
+    transition: font-size 0.3s ease-in-out;
+    
+}
+
+
+
+
+#conclusion:hover {
+    font-size: 30px;
+    animation: none;
+}
+
+
+
+
+#informationSupp {
+    font-size : 20px;
+    margin-top: 20rem;
+    margin-bottom: 5rem;  
+    margin-left: 5rem;
+    margin-right: 5rem;
+    text-align: justify;
+
+}
+
+#avertissement {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    color :white;
+    transform: translateX(-50%);
+    background-color: #1a1f71 ;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.first {
+    animation: fadeIn 2s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.second {
+    animation: fadeSecond 2s ease-in-out forwards;
+}
+
+@keyframes fadeSecond {
+    from {
+        opacity: 0;
+        transform: translateX(700px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.third {
+    animation: fadeThird 2s ease-in-out forwards;
+}
+
+@keyframes fadeThird {
+    from {
+        opacity: 0;
+        transform: translateX(-200px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+
+.degrade {
+    background-image: radial-gradient(circle at center, white -30%, #1a1f71 40%, black 60%);
+    background-position: center top -10rem;
+}
+
+
+#nombreCasPays {
+    position: relative;
+    top: 25rem;
+    left: 0;
+}
+
+
+.onClicked {
+    background-image: radial-gradient(circle at center, white -3%, #1a1f71 40%, black 60%);
+        background-position: center top 3.5rem;
+    }
+
+
+.terreFond {
+    background-image: radial-gradient(circle at center, white -20%, #1a1f71 40%, black 60%);
+    background-position: center top 17rem;
+
+}
+
+
+
+.donneesBouge {
+    animation: bouge 1.5s ease-in-out forwards;
+}
+
+@keyframes bouge {
+    from {
+        opacity: 0;
+        transform: translateY(-400px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes change {
+    0% {
+        background-color: white;
+        color: black;
+    }
+
+    50% {
+        background-color: lightblue;
+        color: black;
+    }
+
+}
+
+button.blink {
+    background-color: white;
+    color: black;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    animation: 0.8s linear infinite;
+}
+
+
+
